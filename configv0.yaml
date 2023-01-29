@@ -1,0 +1,43 @@
+YAML
+
+---
+initial_step_id: 0
+
+step_lst:
+  - step_id: 0
+    text: bla bla
+    actions:
+		- type: "select"
+          value_lst:
+          	- label: "do it1"
+              go_to: 1
+              result:
+              	- type: "loot"
+                  id: "spoon"
+                - type: "expereance"
+                  var: "Daria.respect"
+                  operation: "add"
+                  value: 100
+                - type: "expereance"
+                  var: "Nikita.respect"
+                  operation: "sub"
+                  value: 100
+            - label: "do it2"
+              go_to: 2
+        # - type: "input" - for future!
+        #   value_lst:
+        #   	- value: "answer1"
+        #       go_to: 1
+        #     - value: "answer2"
+        #       go_to: 2
+
+     extensions: 
+     	- type: "img"
+        - src: "path_to_image"
+...
+
+---
+spoon:
+	lable: "spoon"
+    cost: 0.1$
+...
