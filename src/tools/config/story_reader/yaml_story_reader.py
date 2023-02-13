@@ -2,6 +2,10 @@ import yaml
 from .i_story_reader import I_StoryReader
 from ..items.i_item import I_Item, StepItem
 from ..items.actions.i_action import SelectAction, ActionValueItem
+from server.common.results.I_Result import I_Result
+from server.common.results.goto_result import GoToResult
+from server.common.results.loot_result import LootResult
+from server.common.results.expereance_result import ExpereanceResult
 
 
 class YamlStoryReader(I_StoryReader):
@@ -28,7 +32,8 @@ class YamlStoryReader(I_StoryReader):
                     if key == "-step." + str(stepId):
                         item = StepItem()
                         item.text = valueNested["text"]
-                        
+                        # TODO: check is end step
+
                         for key, valueAction in valueNested["-actions"]:
                             actions = list()
                             action = SelectAction()
@@ -41,7 +46,28 @@ class YamlStoryReader(I_StoryReader):
                                 valueItem.label = valueListItem["label"]
                                 valueItem.value = valueListItem["value"]
 
+                                results = list()
                                 for key, valueResult in valueListItem["results"]:
-                                    
+                                    results.append(
+                                        self.__getResultItem(valueResult["type"], valueResult))
+
+                                action.actions.append(results)
+
                             actions.append(action)
                 return item
+
+    def __getResultItem(self, type: str, data: dict) -> I_Result:
+        if type == "go_to":
+            resultItem = GoToResult()
+            resultItem.nextStepId = data["next_step_id"]
+            return resultItem
+        elif type == "loot":
+            resultItem = LootResult()
+            resultItem.lootId = data["id"]
+            return resultItem
+        elif type == "expereance":
+            resultItem = ExpereanceResult()
+            resultItem.var = data["var"]
+            resultItem.operation = data["operation"]
+            resultItem.value = data["value"]
+            return resultItem
