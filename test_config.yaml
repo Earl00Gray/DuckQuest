@@ -14,7 +14,7 @@ step_lst:
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 1
+                            next_step_id: 1
                         -resul2:
                             type: "loot"
                             id: "spoon"
@@ -34,7 +34,7 @@ step_lst:
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 2
+                            next_step_id: 2
     -step.1:
         # id: 1
         text: "story for step 1"
@@ -48,14 +48,14 @@ step_lst:
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 3
+                            next_step_id: 3
                 -value2:
                     label: "do it2"
                     value: "value1"
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 3
+                            next_step_id: 3
     -step.2:
         # id: 2
         text: "story for step 2"
@@ -69,14 +69,14 @@ step_lst:
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 3
+                            next_step_id: 3
                 -value2:
                     label: "do it2"
                     value: "value1"
                     results:
                         -resul1:
                             type: "go_to"
-                            step_id: 3
+                            next_step_id: 3
     -step.3:
         # id: 3
         text: "End of game!"

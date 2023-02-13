@@ -90,25 +90,23 @@ private:
   void showStep(StepItem item) // load and render step
   list<I_Result> getStepResult(int step_id) // Note: use events now, else - todo: use callback
   
-  
-* Result *
+***
+**Result**
 enum ResultType { GoTo, Loot, Expereance };
 
 I_Result
-  ResultType getType()
+    ResultType getType()
   
-  ResultType m_type
+    ResultType m_type
   
 GoToResult : I_Result
-  int m_next_step_id
+    int m_next_step_id
 
 LootResult : I_Result
-  string m_loot_id
+    string m_loot_id
 
 enum OperatorType { Add, Sub, Set };
 ExpereanceResult : I_Result
-  string m_var
-  OperatorType m_operation
-  double m_value
-  
-  
+    string m_var
+    OperatorType m_operation
+    double m_value
