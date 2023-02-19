@@ -1,7 +1,9 @@
 import yaml
+from strenum import StrEnum
 from .i_story_reader import I_StoryReader
 from ..items.i_item import I_Item, StepItem
-from ..items.actions.i_action import SelectAction, ActionValueItem
+from ..items.actions.i_action import I_Actions, ActionType, ActionValueItem
+from ..items.actions.select_action import SelectActions
 from server.common.results.I_Result import I_Result
 from server.common.results.goto_result import GoToResult
 from server.common.results.loot_result import LootResult
@@ -12,62 +14,94 @@ class YamlStoryReader(I_StoryReader):
     def __init__(self):
         pass
 
-    def load(self, pathStoryConfig: str) -> None:
+    def load(self, pathStoryConfig: str, needDebugPrintContent: bool = False) -> None:
         with open(pathStoryConfig) as file:
             self.__loadedData = yaml.load(file, Loader=yaml.FullLoader)
-            self.__loadedPath = pathStoryConfig
+            self.__loadedFilePath = pathStoryConfig
+            if needDebugPrintContent:
+                print(self.__loadedData)
 
     def getStartStepId(self) -> str:
-        if "start_step_id" in self.__loadedData:
-            return self.__loadedData["start_step_id"]
-        else:
-            print(
-                f"Element 'start_step_id' - not found in {self.__loadedPath}")
-            return 0
+        value, hasValue = self.__getAttributeValue(
+            "start_step_id", self.__loadedData)
+        if not hasValue:
+            return ""
+        return value
 
     def getItem(self, stepId: int) -> I_Item:
-        for key, value in self.__loadedData.items():
-            if isinstance(value, dict):
-                for key, valueNested in value.items():
-                    if key == "-step." + str(stepId):
-                        item = StepItem()
-                        item.text = valueNested["text"]
-                        # TODO: check is end step
+        pass
 
-                        for key, valueAction in valueNested["-actions"]:
-                            actions = list()
-                            action = SelectAction()
-                            action.type = valueAction["type"]
-                            action.id = valueAction["id"]
+    def getItem(self, stepId: int) -> tuple():  # I_Item, bool
+        stepList, hasStepListAttribute = self.__getAttributeValue(
+            "step_lst", self.__loadedData)
+        if not hasStepListAttribute:
+            return None, False
 
-                            for key, valueListItem in valueAction["value_lst"]:
-                                valueItems = list()
-                                valueItem = ActionValueItem()
-                                valueItem.label = valueListItem["label"]
-                                valueItem.value = valueListItem["value"]
+        for stepItem in stepList:
+            if stepItem["step_id"] == stepId:
+                item = StepItem()
+                item.text = stepItem["text"]
+                item.isFinishStep = "is_finish_step" in stepItem
+                item.actions = self.__getActionList(stepItem)
+                return item, True
+        return None, False
 
-                                results = list()
-                                for key, valueResult in valueListItem["results"]:
-                                    results.append(
-                                        self.__getResultItem(valueResult["type"], valueResult))
+    # private
+    def __getAttributeValue(self, attributeName: str, where: dict, needPrint: bool = True) -> tuple():  # dict, bool
+        if attributeName in where:
+            return where[attributeName], True
+        else:
+            if needPrint:
+                print(f"Element {attributeName} - not found in {where}")
+            return None, False
 
-                                action.actions.append(results)
+    def __getActionList(self, stepItem: dict) -> tuple():  # dict, bool
+        actions = list()
+        for actionItem in stepItem["actions"]:
+            actions.append(self.__getAction(actionItem))
+        return actions, True
 
-                            actions.append(action)
-                return item
+    def __getAction(self, actionsData: dict) -> tuple():  # I_Actions, bool
+        actionType = actionsData["type"]
+        if actionsData["type"] == ActionType.SELECT:
+            action = SelectActions()
+            action.id = actionsData["id"]
+            action.valueList = self.__getActionValue(action["value_lst"])
+        else:
+            print(
+                f"Unknown action type {actionType} in {self.__loadedFilePath}")
+            return
 
-    def __getResultItem(self, type: str, data: dict) -> I_Result:
-        if type == "go_to":
+    def __getActionValue(self, valueList: list) -> list:
+        valueItems = list()
+        for valueItem in valueList:
+            actionValueItem = ActionValueItem()
+            actionValueItem.label = valueItem["label"]
+            actionValueItem.value = valueItem["value"]
+
+            for resultItem in valueItem["results"]:
+                actionValueItem.resultList.append(
+                    self.__getResultItem(resultItem))
+
+            valueItems.append(actionValueItem)
+        return valueItems
+
+    def __getResultItem(self, resultData: dict) -> I_Result:
+        resultType = resultData["type"]
+        if resultType == "go_to":
             resultItem = GoToResult()
-            resultItem.nextStepId = data["next_step_id"]
+            resultItem.nextStepId = resultData["next_step_id"]
             return resultItem
-        elif type == "loot":
+        elif resultType == "loot":
             resultItem = LootResult()
-            resultItem.lootId = data["id"]
+            resultItem.lootId = resultData["id"]
             return resultItem
-        elif type == "expereance":
+        elif resultType == "expereance":
             resultItem = ExpereanceResult()
-            resultItem.var = data["var"]
-            resultItem.operation = data["operation"]
-            resultItem.value = data["value"]
+            resultItem.var = resultData["var"]
+            resultItem.operation = resultData["operation"]
+            resultItem.value = resultData["value"]
             return resultItem
+        else:
+            print(f"Unknown result type {type} in {self.__loadedFilePath}")
+            return None
