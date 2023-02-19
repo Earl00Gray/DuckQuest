@@ -1,16 +1,19 @@
-from enum import Enum
+from strenum import StrEnum
 from .I_Result import I_Result, ResultType
 
 
-class OperatorType(Enum):
-    Add = 0
-    Sub = 1
-    Set = 2
+class OperatorType(StrEnum):
+    Add = "add"
+    Sub = "sub"
+    Set = "set"
 
 
 class ExpereanceResult(I_Result):
     def __init__(self):
-        self.m_type = ResultType.EXPEREANCE
+        super().__init__(ResultType.EXPEREANCE)
+        self.__var: str = ""
+        self.__operator: OperatorType = OperatorType.Add
+        self.__value: int = 0
 
     @property
     def var(self) -> str:

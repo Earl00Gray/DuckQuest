@@ -3,7 +3,8 @@ from .I_Result import I_Result, ResultType
 
 class LootResult(I_Result):
     def __init__(self):
-        self.m_type = ResultType.LOOT
+        super().__init__(ResultType.LOOT)
+        self.__lootId: str = ""
 
     @property
     def lootId(self) -> str:

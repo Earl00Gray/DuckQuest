@@ -1,11 +1,11 @@
-from enum import Enum
+from strenum import StrEnum
 from abc import ABC, abstractmethod
 
 
-class StoryItemType(Enum):
-    STEP = 0
-    INVENTORY = 1
-    UNKNOWN = 2
+class StoryItemType(StrEnum):
+    STEP = "step"
+    INVENTORY = "inventory"
+    UNKNOWN = "unknown"
 
 # interface
 
@@ -13,6 +13,7 @@ class StoryItemType(Enum):
 class I_Item(ABC):
     def __init__(self, type: StoryItemType = StoryItemType.UNKNOWN) -> None:
         self.__type = type
+        self.__id = 0
 
     @property
     def type(self) -> StoryItemType:
@@ -27,7 +28,10 @@ class I_Item(ABC):
 
 class StepItem(I_Item):
     def __init__(self):
-        pass
+        super().__init__(StoryItemType.STEP)
+        self.__text = ""
+        self.__actions = []
+        self.__isFinishStep = False
 
     @property
     def text(self) -> str:
@@ -36,6 +40,14 @@ class StepItem(I_Item):
     @text.setter
     def text(self, text: str) -> str:
         self.__text = text
+
+    @property
+    def isFinishStep(self) -> bool:
+        return self.__isFinishStep
+
+    @isFinishStep.setter
+    def isFinishStep(self, isFinishStep: bool) -> bool:
+        return self.__isFinishStep
 
     @property
     def actions(self) -> list:
@@ -47,7 +59,9 @@ class StepItem(I_Item):
 
 class InventoryItem(I_Item):
     def __init__(self):
-        pass
+        super().__init__(StoryItemType.INVENTORY)
+        self.__inventoryType = ""
+        self.__props = {}
 
     @property
     def inventoryType(self) -> str:

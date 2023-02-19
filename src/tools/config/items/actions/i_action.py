@@ -1,31 +1,48 @@
-from enum import Enum
+from strenum import StrEnum
 from abc import ABC, abstractmethod
 
 
+class ActionType(StrEnum):
+    SELECT = "select"
+    UNKNOWN = "unknown"
+
+
 class ActionValueItem:
+    def __init__(self) -> None:
+        self.__label: str = ""
+        self.__value: str = ""
+        self.__result_lst: list = []
+
     @property
     def label(self) -> str:
         return self.__label
+
+    @label.setter
+    def label(self, label: str) -> str:
+        self.__label = label
 
     @property
     def value(self) -> str:
         return self.__value
 
+    @value.setter
+    def value(self, value: str) -> str:
+        self.__value = value
+
     @property
     def resultList(self) -> list:
         return self.__result_lst
 
-
-class ActionType(Enum):
-    SELECT = 0
-    UNKNOWN = 1
-
-# interface
+    @resultList.setter
+    def resultList(self, resultList: list) -> list:
+        self.__result_lst = resultList
 
 
 class I_Actions(ABC):
     def __init__(self, type: ActionType = ActionType.UNKNOWN) -> None:
-        self.__type = type
+        self.__type: ActionType = type
+        self.__id: int = 0
+        self.__valueList: list = []
 
     @property
     def type(self) -> ActionType:
@@ -35,13 +52,14 @@ class I_Actions(ABC):
     def id(self) -> int:
         return self.__id
 
+    @id.setter
+    def id(self, id: int) -> int:
+        self.__id = id
+
     @property
-    def actions(self) -> list:
-        return self.__actions
+    def valueList(self) -> list:  # ActionValueItem
+        return self.__valueList
 
-# select action
-
-
-class SelectAction(I_Actions):
-    def __init__(selt):
-        pass
+    @valueList.setter
+    def valueList(self, valueList: list) -> list:  # ActionValueItem
+        self.__valueList = valueList
