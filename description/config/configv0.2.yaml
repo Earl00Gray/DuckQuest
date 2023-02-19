@@ -1,5 +1,4 @@
 YAML
-
 ---
 initial_step_id: 0
 
@@ -7,43 +6,40 @@ step_lst:
   - step_id: 0
     text: bla bla
     actions:
-		- type: "select"
-          id: 0
-          value_lst:
-          	- label: "do it1"
-              value: "value0"
-              result:
-              	- type: "go_to"
-                  step_id: 1
-              	- type: "loot"
-                  id: "spoon"
-                - type: "expereance"
-                  var: "Daria.respect"
-                  operation: "add"
-                  value: 100
-                - type: "expereance"
-                  var: "Nikita.respect"
-                  operation: "sub"
-                  value: 100
-            - label: "do it2"
-              value: "value1"
-              result:
-              	- type: "go_to"
-                  step_id: 2
-        # - type: "input" - for future!
-        #   value_lst:
-        #   	- value: "answer1"
-        #       go_to: 1
-        #     - value: "answer2"
-        #       go_to: 2
+      - type: "select"
+        id: 0
+        value_lst:
+          - label: "do it1"
+            value: "value0"
+            result:
+              - type: "go_to"
+                step_id: 1
+              - type: "loot"
+                id: "spoon"
+              - type: "expereance"
+                var: "Daria.respect"
+                operation: "add"
+                value: 100
+              - type: "expereance"
+                var: "Nikita.respect"
+                operation: "sub"
+                value: 100
+              - label: "do it2"
+                value: "value1"
+                result:
+                  - type: "go_to"
+                    step_id: 2
+          # - type: "input" - for future!
+          #   value_lst:
+          #   	- value: "answer1"
+          #       go_to: 1
+          #     - value: "answer2"
+          #       go_to: 2
 
-     extensions: 
-     	- type: "img"
-        - src: "path_to_image"
-...
-
+    extensions:
+      - type: "img"
+      - src: "path_to_image"
 ---
 spoon:
-	lable: "Gold spoon with icecream"
-    cost: 0.1$
-...
+  lable: "Gold spoon with icecream"
+  cost: 0.1$

@@ -1,83 +1,64 @@
 start_step_id: 0
 
 step_lst:
-    -step.0:
-        # id: 0
-        text: "story for step 0"
-        -actions:
-            type: "select"
-            id: 0
-            value_lst:
-                -value1:
-                    label: "do it1"
-                    value: "value2"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 1
-                        -resul2:
-                            type: "loot"
-                            id: "spoon"
-                        -resul3:
-                            type: "expereance"
-                            var: "Daria.respect"
-                            operation: "add"
-                            value: 100
-                        -result4:
-                            type: "expereance"
-                            var: "Nikita.respect"
-                            operation: "sub"
-                            value: 100
-                -value2:
-                    label: "do it2"
-                    value: "value1"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 2
-    -step.1:
-        # id: 1
-        text: "story for step 1"
-        -actions:
-            type: "select"
-            id: 0
-            value_lst:
-                -value1:
-                    label: "do it1"
-                    value: "value2"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 3
-                -value2:
-                    label: "do it2"
-                    value: "value1"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 3
-    -step.2:
-        # id: 2
-        text: "story for step 2"
-        -actions:
-            type: "select"
-            id: 0
-            value_lst:
-                -value1:
-                    label: "do it1"
-                    value: "value2"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 3
-                -value2:
-                    label: "do it2"
-                    value: "value1"
-                    results:
-                        -resul1:
-                            type: "go_to"
-                            next_step_id: 3
-    -step.3:
-        # id: 3
-        text: "End of game!"
-        is_finished: true
+  - step_id: 0
+    text: "story for step 0"
+    actions:
+      - type: "select"
+        id: 0
+        value_lst:
+          - label: "do it1"
+            value: "value2"
+            results:
+          - type: "go_to"
+            next_step_id: 1
+          - type: "loot"
+            id: "spoon"
+          - type: "expereance"
+            var: "Daria.respect"
+            operation: "add"
+            value: 100
+          - type: "expereance"
+            var: "Nikita.respect"
+            operation: "sub"
+            value: 100
+      - label: "do it2"
+        value: "value1"
+        results:
+          - type: "go_to"
+            next_step_id: 2
+  - step_id: 1
+    text: "story for step 1"
+    actions:
+      type: "select"
+      id: 0
+      value_lst:
+        - label: "do it1"
+          value: "value1"
+          results:
+            - type: "go_to"
+              next_step_id: 3
+        - label: "do it2"
+          value: "value2"
+          results:
+            - type: "go_to"
+              next_step_id: 3
+  - step_id: 2
+    text: "story for step 2"
+    actions:
+      - type: "select"
+        id: 0
+        value_lst:
+          - label: "do it1"
+            value: "value2"
+            results:
+              - type: "go_to"
+                next_step_id: 3
+          - label: "do it2"
+            value: "value1"
+            results:
+              - type: "go_to"
+                next_step_id: 3
+  - step_id:
+    text: "End of game!"
+    is_finish_step: true
