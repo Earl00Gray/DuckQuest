@@ -1,5 +1,6 @@
 from strenum import StrEnum
 
+
 class ResultType(StrEnum):
     GO_TO = "go_to"
     LOOT = "loot"
@@ -7,8 +8,8 @@ class ResultType(StrEnum):
 
 
 class I_Result:
-    m_type: ResultType
-    
+    def __init__(self, type: ResultType):
+        self.__type = type
+
     def getType(self) -> ResultType:
-        return self.m_type
-  
+        return self.__type

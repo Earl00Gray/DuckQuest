@@ -1,0 +1,112 @@
+**StoryReader**
+
+I_StoryReader
+  void load(string path)
+  I_Item getItem(int id)
+
+***
+**Item (reading config)**
+
+I_Item
+    int id;
+  
+    int getId()
+
+StepItem : I_Item
+  string text;
+  lst<Action> action_lst;
+
+InventoryItem : I_Item
+  string type;
+  dict prop_dict;
+
+***
+**Actions**
+
+ActionValueItem
+    string label
+    string value
+    list<I_Result> result_lst
+
+I_Action 
+    string type
+    int id
+    list<ActionValueItem> value_lst
+
+SelectAction : I_Action
+
+***
+
+GameState:
+  History m_history
+  Context m_context
+  Inventory m_inventory
+  
+  void storeStep(int step_id, int result, int res_value)
+
+I_GameStateItem
+  GameStateItemType getType()
+  dict serialize()
+  static GameStateItem deserialize(dict)
+
+History: I_GameStateItem
+  dict<int, list<I_Result>> step_dict;
+  
+  void appendStep(list<I_Result>)
+  void getStep(int)
+
+Context: I_GameStateItem // for save expereance and relationship
+  dict<string, any> var_dict;             //var_dict['health'] = 100
+  
+  any getVar(string)
+  void setVar(string, any)
+
+Character: I_GameStateItem //for save character state
+  dict<string, any> var_dict;             //var_dict['health'] = 100
+  
+  any getVar(string)
+  void setVar(string, any)
+
+Inventory: I_GameStateItem
+  dict<int, Loot> loot_dict;
+
+  Loot getLoot(int loot_id)
+  void addLoot(Loot loot)
+  void rmLoot(int loot_id)
+
+
+I_GameReaderWriter:
+  GameState load()
+  bool save(GameState game)
+  
+  
+***
+
+StoryEngine:
+  void loadGame(GameState)
+  GameState saveGame()
+  
+private:
+  void showStep(StepItem item) // load and render step
+  list<I_Result> getStepResult(int step_id) // Note: use events now, else - todo: use callback
+  
+***
+**Result**
+enum ResultType { GoTo, Loot, Expereance };
+
+I_Result
+    ResultType getType()
+  
+    ResultType m_type
+  
+GoToResult : I_Result
+    int m_next_step_id
+
+LootResult : I_Result
+    string m_loot_id
+
+enum OperatorType { Add, Sub, Set };
+ExpereanceResult : I_Result
+    string m_var
+    OperatorType m_operation
+    double m_value

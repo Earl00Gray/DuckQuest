@@ -16,7 +16,7 @@
             "name": "Python: Main",
             "type": "python",
             "request": "launch",
-            "program": "src/server/main.py",
+            "program": "src/main.py",
             "justMyCode": true,
         }
     ]
