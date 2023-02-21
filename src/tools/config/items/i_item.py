@@ -38,7 +38,7 @@ class StepItem(I_Item):
         return self.__text
 
     @text.setter
-    def text(self, text: str) -> str:
+    def text(self, text: str):
         self.__text = text
 
     @property
@@ -46,12 +46,16 @@ class StepItem(I_Item):
         return self.__isFinishStep
 
     @isFinishStep.setter
-    def isFinishStep(self, isFinishStep: bool) -> bool:
-        return self.__isFinishStep
+    def isFinishStep(self, isFinishStep: bool):
+        self.__isFinishStep = isFinishStep
 
     @property
     def actions(self) -> list:
         return self.__actions
+
+    @actions.setter
+    def actions(self, actions: list):
+        self.__actions = actions
 
 
 # inventory item

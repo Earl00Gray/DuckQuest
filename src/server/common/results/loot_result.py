@@ -9,3 +9,7 @@ class LootResult(I_Result):
     @property
     def lootId(self) -> str:
         return self.__lootId
+
+    @lootId.setter
+    def lootId(self, lootId: str):
+        self.__lootId = lootId

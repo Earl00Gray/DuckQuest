@@ -9,3 +9,7 @@ class GoToResult(I_Result):
     @property
     def nextStepId(self) -> int:
         return self.__nextStepId
+
+    @nextStepId.setter
+    def nextStepId(self, nextStepId: int):
+        self.__nextStepId = nextStepId

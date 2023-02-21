@@ -3,12 +3,16 @@ from tools.config.story_reader.yaml_story_reader import YamlStoryReader
 
 def testYamlStoryReader():
     yamlStoryReader = YamlStoryReader()
-    yamlStoryReader.load(
-        "D:\\project\\text_quest\\DuckQuest.git\\test_config.yaml")
+    configPath: str = "D:\\project\\text_quest\\DuckQuest.git\\test_config.yaml"
+    yamlStoryReader.load(configPath)
     print(f"initial step id: { yamlStoryReader.getStartStepId() }")
 
-    item = yamlStoryReader.getItem(0)
-    print(f"item.text: { item.text } ")
+    stepId: int = 3
+    item, hasItem = yamlStoryReader.getItem(stepId)
+    if not hasItem:
+        print(f"There is no step with id '{ stepId }' in '{ configPath }' ")
+    else:
+        print(f"item.text: '{ item.text }' ")
 
 
 testYamlStoryReader()

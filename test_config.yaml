@@ -8,7 +8,7 @@ step_lst:
         id: 0
         value_lst:
           - label: "do it1"
-            value: "value2"
+            value: "value1"
             results:
               - type: "go_to"
                 next_step_id: 1
@@ -22,27 +22,27 @@ step_lst:
                 var: "Nikita.respect"
                 operation: "sub"
                 value: 100
-      - label: "do it2"
-        value: "value1"
-        results:
-          - type: "go_to"
-            next_step_id: 2
+          - label: "do it2"
+            value: "value2"
+            results:
+              - type: "go_to"
+                next_step_id: 2
   - step_id: 1
     text: "story for step 1"
     actions:
-      type: "select"
-      id: 0
-      value_lst:
-        - label: "do it1"
-          value: "value1"
-          results:
-            - type: "go_to"
-              next_step_id: 3
-        - label: "do it2"
-          value: "value2"
-          results:
-            - type: "go_to"
-              next_step_id: 3
+      - type: "select"
+        id: 0
+        value_lst:
+          - label: "do it1"
+            value: "value1"
+            results:
+              - type: "go_to"
+                next_step_id: 3
+          - label: "do it2"
+            value: "value2"
+            results:
+              - type: "go_to"
+                next_step_id: 3
   - step_id: 2
     text: "story for step 2"
     actions:
@@ -59,6 +59,6 @@ step_lst:
             results:
               - type: "go_to"
                 next_step_id: 3
-  - step_id:
+  - step_id: 3
     text: "End of game!"
     is_finish_step: true

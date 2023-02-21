@@ -9,6 +9,7 @@ class ActionType(StrEnum):
 
 class ActionValueItem:
     def __init__(self) -> None:
+        
         self.__label: str = ""
         self.__value: str = ""
         self.__result_lst: list = []
@@ -18,7 +19,7 @@ class ActionValueItem:
         return self.__label
 
     @label.setter
-    def label(self, label: str) -> str:
+    def label(self, label: str):
         self.__label = label
 
     @property
@@ -26,7 +27,7 @@ class ActionValueItem:
         return self.__value
 
     @value.setter
-    def value(self, value: str) -> str:
+    def value(self, value: str):
         self.__value = value
 
     @property
@@ -34,7 +35,7 @@ class ActionValueItem:
         return self.__result_lst
 
     @resultList.setter
-    def resultList(self, resultList: list) -> list:
+    def resultList(self, resultList: list):
         self.__result_lst = resultList
 
 
@@ -53,7 +54,7 @@ class I_Actions(ABC):
         return self.__id
 
     @id.setter
-    def id(self, id: int) -> int:
+    def id(self, id: int):
         self.__id = id
 
     @property
@@ -61,5 +62,5 @@ class I_Actions(ABC):
         return self.__valueList
 
     @valueList.setter
-    def valueList(self, valueList: list) -> list:  # ActionValueItem
+    def valueList(self, valueList: list):
         self.__valueList = valueList
