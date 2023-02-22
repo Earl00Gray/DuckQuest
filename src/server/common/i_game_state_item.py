@@ -21,5 +21,5 @@ class I_GameStateItem(ABC):
         pass
 
     @abstractmethod
-    def deserialize(dect_in: dict):
+    def deserialize(dict_in: dict):
         pass
