@@ -1,4 +1,6 @@
 from tools.config.story_reader.yaml_story_reader import YamlStoryReader
+from tools.game_read_write.yaml_game_read_write import YamlGameReadWrite
+from server.engine.game_state import GameState
 
 
 def testYamlStoryReader():
@@ -15,4 +17,10 @@ def testYamlStoryReader():
         print(f"item.text: '{ item.text }' ")
 
 
-testYamlStoryReader()
+def testGameReadWrite():
+    yamlGameReadWrite = YamlGameReadWrite()
+    gameState = GameState()
+    yamlGameReadWrite.saveGameState(gameState)
+
+
+testGameReadWrite()

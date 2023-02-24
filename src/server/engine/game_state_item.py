@@ -1,9 +1,9 @@
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 
-from common.i_game_state_item import I_GameStateItem, GameStateItemType
-from common.I_Result import I_Result
-from engine.action_result import ExpereanceOperatorType
+from server.common.i_game_state_item import I_GameStateItem, GameStateItemType
+from server.common.results.I_Result import I_Result
+from server.engine.action_result import ExpereanceOperatorType
 
 @dataclass
 class HistoryItem:
